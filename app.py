@@ -29,7 +29,7 @@ def user_input():
     occupation = st.selectbox('Occupation', ['Tech-support', 'Craft-repair', 'Other-service', 'Sales', 'Exec-managerial', 'Prof-specialty',
                                              'Handlers-cleaners', 'Machine-op-inspct', 'Adm-clerical', 'Farming-fishing', 'Transport-moving',
                                              'Priv-house-serv', 'Protective-serv', 'Armed-Forces'])
-    sex = st.selectbox('Gender', ['Male', 'Female'])
+    sex = st.selectbox('Sex', ['Male', 'Female'])
     relationship = st.selectbox('Relationship', ['Husband', 'Not-in-family', 'Own-child', 'Unmarried', 'Wife', 'Other-relative'])
     race = st.selectbox('Race', ['White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'])
     native_country = st.selectbox('Native Country', ['United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'])
@@ -45,23 +45,25 @@ def user_input():
         f'Education_{education}': 1,
         f'Marital Status_{marital_status}': 1,
         f'Occupation_{occupation}': 1,
-        f'Gender_{sex}': 1,
+        f'Sex_{sex}': 1,
         f'Relationship_{relationship}': 1,
         f'Race_{race}': 1,
         f'Native Country_{native_country}': 1
     }
 
-    # Convert to DataFrame and align with model columns
     input_df = pd.DataFrame([data])
     for col in columns:
         if col not in input_df.columns:
             input_df[col] = 0
     input_df = input_df[columns]
-    return input_df
+    return input_df, education, education_num
 
-df = user_input()
+# Ambil input user
+df, education, education_num = user_input()
 
 if st.button('Predict'):
     prediction = model.predict(df)[0]
     result = '>50K' if prediction == 1 else '<=50K'
+
+    st.markdown(f"**Education Selected:** {education}  \n**Education Number:** {education_num}")
     st.success(f"Predicted Income: {result}")
