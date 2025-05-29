@@ -65,5 +65,5 @@ if st.button('Predict'):
     prediction = model.predict(df)[0]
     result = '>50K' if prediction == 1 else '<=50K'
 
-    st.markdown(f"**Education Selected:** {education}  \n**Education Number:** {education_num}")
+    st.markdown(f"**Education Level:** {education}")
     st.success(f"Predicted Income: {result}")
