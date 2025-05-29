@@ -102,3 +102,15 @@ if st.button('Predict'):
 
     st.markdown("### \U0001F4BC Hasil Prediksi")
     st.success(f"Predicted Income: {result}")
+
+import streamlit as st
+
+education = st.selectbox('Education', [
+    'Preschool', '1st-4th', '5th-6th', '7th-8th',
+    '9th', '10th', '11th', '12th',
+    'HS-grad', 'Some-college', 'Assoc-voc', 'Assoc-acdm',
+    'Bachelors', 'Masters', 'Prof-school', 'Doctorate'
+])
+
+st.write(f"Selected: {education}")
+
