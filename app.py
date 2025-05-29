@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pickle
 import pandas as pd
@@ -12,19 +13,26 @@ with open('columns.pkl', 'rb') as f:
 st.markdown("<h1 style='text-align:center;'>Income Category Prediction</h1>", unsafe_allow_html=True)
 st.markdown("This app predicts whether a person earns >50K or <=50K based on demographic and employment features.")
 
+# Mapping Education to EducationNum
+education_num_map = {
+    'Preschool': 1, '1st-4th': 2, '5th-6th': 3, '7th-8th': 4,
+    '9th': 5, '10th': 6, '11th': 7, '12th': 8,
+    'HS-grad': 9, 'Some-college': 10, 'Assoc-voc': 11,
+    'Assoc-acdm': 12, 'Bachelors': 13, 'Masters': 14,
+    'Prof-school': 15, 'Doctorate': 16
+}
+
 # Input form
 def user_input():
     age = st.slider('Age', 17, 90, 30)
-    education_num = st.slider('Education Number', 1, 16, 9)
     hours_per_week = st.slider('Hours per Week', 1, 100, 40)
     capital_gain = st.number_input('Capital Gain', 0, 100000, 0)
     capital_loss = st.number_input('Capital Loss', 0, 5000, 0)
     fnlwgt = st.number_input('Final Weight', 10000, 1000000, 50000)
 
     workclass = st.selectbox('Workclass', ['Private', 'Self-emp-not-inc', 'Local-gov', 'State-gov', 'Federal-gov', 'Self-emp-inc', 'Without-pay'])
-    education = st.selectbox('Education', ['Preschool', '1st-4th', '5th-6th', '7th-8th', '9th', '10th', '11th', '12th',
-                                           'HS-grad', 'Some-college', 'Assoc-voc', 'Assoc-acdm', 'Bachelors', 'Masters',
-                                           'Prof-school', 'Doctorate'])
+    education = st.selectbox('Education', list(education_num_map.keys()))
+    education_num = education_num_map[education]
     marital_status = st.selectbox('Marital Status', ['Never-married', 'Married-civ-spouse', 'Divorced', 'Separated', 'Widowed', 'Married-spouse-absent'])
     occupation = st.selectbox('Occupation', ['Tech-support', 'Craft-repair', 'Other-service', 'Sales', 'Exec-managerial', 'Prof-specialty',
                                              'Handlers-cleaners', 'Machine-op-inspct', 'Adm-clerical', 'Farming-fishing', 'Transport-moving',
@@ -58,12 +66,17 @@ def user_input():
     input_df = input_df[columns]
     return input_df, education, education_num
 
-# Ambil input user
+# Ambil input dari user
 df, education, education_num = user_input()
 
+# Prediksi saat tombol ditekan
 if st.button('Predict'):
     prediction = model.predict(df)[0]
     result = '>50K' if prediction == 1 else '<=50K'
 
-    st.markdown(f"**Education Level:** {education}")
+    st.markdown("### 🎓 Informasi Pendidikan")
+    st.write(f"**Pendidikan yang Dipilih:** {education}")
+    st.write(f"**Nomor Pendidikan (EducationNum):** {education_num}")
+
+    st.markdown("### 💼 Hasil Prediksi")
     st.success(f"Predicted Income: {result}")
