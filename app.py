@@ -10,9 +10,8 @@ with open('xgboost_model.pkl', 'rb') as file:
 with open('columns.pkl', 'rb') as f:
     columns = pickle.load(f)
 
-# App title
 st.markdown("<h1 style='text-align:center;'>Income Category Prediction</h1>", unsafe_allow_html=True)
-st.markdown("This app predicts whether a person earns >50K or <=50K based on input features.")
+st.markdown("This app predicts whether a person earns >50K or <=50K based on full demographic and employment features.")
 
 # Input form
 def user_input():
@@ -21,7 +20,17 @@ def user_input():
     hours_per_week = st.slider('Hours per Week', 1, 100, 40)
     capital_gain = st.number_input('Capital Gain', 0, 100000, 0)
     capital_loss = st.number_input('Capital Loss', 0, 5000, 0)
-    final_weight = st.number_input('Final Weight', 10000, 1000000, 50000)
+    fnlwgt = st.number_input('Final Weight', 10000, 1000000, 50000)
+
+    workclass = st.selectbox('Workclass', ['Private', 'Self-emp-not-inc', 'Local-gov', 'State-gov', 'Federal-gov', 'Self-emp-inc', 'Without-pay'])
+    marital_status = st.selectbox('Marital Status', ['Never-married', 'Married-civ-spouse', 'Divorced', 'Separated', 'Widowed', 'Married-spouse-absent'])
+    occupation = st.selectbox('Occupation', ['Tech-support', 'Craft-repair', 'Other-service', 'Sales', 'Exec-managerial', 'Prof-specialty',
+                                             'Handlers-cleaners', 'Machine-op-inspct', 'Adm-clerical', 'Farming-fishing', 'Transport-moving',
+                                             'Priv-house-serv', 'Protective-serv', 'Armed-Forces'])
+    sex = st.selectbox('Sex', ['Male', 'Female'])
+    relationship = st.selectbox('Relationship', ['Husband', 'Not-in-family', 'Own-child', 'Unmarried', 'Wife', 'Other-relative'])
+    race = st.selectbox('Race', ['White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'])
+    native_country = st.selectbox('Native Country', ['United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'])
 
     data = {
         'age': age,
@@ -29,10 +38,17 @@ def user_input():
         'hours_per_week': hours_per_week,
         'capital_gain': capital_gain,
         'capital_loss': capital_loss,
-        'fnlwgt': final_weight
+        'fnlwgt': fnlwgt,
+        'workclass_' + workclass: 1,
+        'marital_status_' + marital_status: 1,
+        'occupation_' + occupation: 1,
+        'sex_' + sex: 1,
+        'relationship_' + relationship: 1,
+        'race_' + race: 1,
+        'native_country_' + native_country: 1
     }
 
-    # Create DataFrame and align with training columns
+    # Convert to DataFrame and align with model columns
     input_df = pd.DataFrame([data])
     for col in columns:
         if col not in input_df.columns:
@@ -42,7 +58,6 @@ def user_input():
 
 df = user_input()
 
-# Prediction
 if st.button('Predict'):
     prediction = model.predict(df)[0]
     result = '>50K' if prediction == 1 else '<=50K'
