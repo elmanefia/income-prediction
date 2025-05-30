@@ -66,7 +66,7 @@ def user_input():
         race = st.selectbox('Race', [
             'White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'
         ])
-         native_country = st.selectbox('Native Country', [
+        native_country = st.selectbox('Native Country', [
             'United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'
         ])
 
