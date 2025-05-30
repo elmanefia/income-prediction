@@ -46,16 +46,11 @@ def user_input():
             'Prof-school': 15, 'Doctorate': 16
         }[education]
         
-         native_country = st.selectbox('Native Country', [
-             'United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'
-        ])
-        
-    with left:
         marital_status = st.selectbox('Marital Status', [
             'Never-married', 'Married-civ-spouse', 'Divorced',
             'Separated', 'Widowed', 'Married-spouse-absent'
         ])
-
+    with left:
         occupation = st.selectbox('Occupation', [
             'Tech-support', 'Craft-repair', 'Other-service', 'Sales',
             'Exec-managerial', 'Prof-specialty', 'Handlers-cleaners',
@@ -70,6 +65,9 @@ def user_input():
         ])
         race = st.selectbox('Race', [
             'White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'
+        ])
+         native_country = st.selectbox('Native Country', [
+            'United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'
         ])
 
     data = {
