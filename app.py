@@ -45,9 +45,11 @@ def user_input():
             'Assoc-acdm': 12, 'Bachelors': 13, 'Masters': 14,
             'Prof-school': 15, 'Doctorate': 16
         }[education]
+        
          native_country = st.selectbox('Native Country', [
-            'United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'
+             'United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'
         ])
+        
     with left:
         marital_status = st.selectbox('Marital Status', [
             'Never-married', 'Married-civ-spouse', 'Divorced',
