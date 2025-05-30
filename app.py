@@ -15,55 +15,57 @@ st.markdown("This app predicts whether a person earns >50K or <=50K based on dem
 
 # Input form
 def user_input():
+    left, right = st.columns((2,2))
     age = st.slider('Age', 17, 90, 30)
     hours_per_week = st.slider('Hours per Week', 1, 100, 40)
-    capital_gain = st.number_input('Capital Gain', 0, 100000, 0)
-    capital_loss = st.number_input('Capital Loss', 0, 5000, 0)
-    fnlwgt = st.number_input('Final Weight', 10000, 1000000, 50000)
+    with right: 
+        capital_gain = st.number_input('Capital Gain', 0, 100000, 0)
+        capital_loss = st.number_input('Capital Loss', 0, 5000, 0)
+        fnlwgt = st.number_input('Final Weight', 10000, 1000000, 50000)
 
-    workclass = st.selectbox('Workclass', [
-        'Private', 'Self-emp-not-inc', 'Local-gov', 'State-gov',
-        'Federal-gov', 'Self-emp-inc', 'Without-pay'
-    ])
+        workclass = st.selectbox('Workclass', [
+            'Private', 'Self-emp-not-inc', 'Local-gov', 'State-gov',
+            'Federal-gov', 'Self-emp-inc', 'Without-pay'
+        ])
 
-    education = st.selectbox('Education', [
-        'Preschool', '1st-4th', '5th-6th', '7th-8th',
-        '9th', '10th', '11th', '12th',
-        'HS-grad', 'Some-college', 'Assoc-voc', 'Assoc-acdm',
-        'Bachelors', 'Masters', 'Prof-school', 'Doctorate'
-    ])
+        education = st.selectbox('Education', [
+            'Preschool', '1st-4th', '5th-6th', '7th-8th',
+            '9th', '10th', '11th', '12th',
+            'HS-grad', 'Some-college', 'Assoc-voc', 'Assoc-acdm',
+            'Bachelors', 'Masters', 'Prof-school', 'Doctorate'
+        ])
 
-    education_num = {
-        'Preschool': 1, '1st-4th': 2, '5th-6th': 3, '7th-8th': 4,
-        '9th': 5, '10th': 6, '11th': 7, '12th': 8,
-        'HS-grad': 9, 'Some-college': 10, 'Assoc-voc': 11,
-        'Assoc-acdm': 12, 'Bachelors': 13, 'Masters': 14,
-        'Prof-school': 15, 'Doctorate': 16
-    }[education]
+        education_num = {
+            'Preschool': 1, '1st-4th': 2, '5th-6th': 3, '7th-8th': 4,
+            '9th': 5, '10th': 6, '11th': 7, '12th': 8,
+            'HS-grad': 9, 'Some-college': 10, 'Assoc-voc': 11,
+            'Assoc-acdm': 12, 'Bachelors': 13, 'Masters': 14,
+            'Prof-school': 15, 'Doctorate': 16
+        }[education]
+    with left:
+        marital_status = st.selectbox('Marital Status', [
+            'Never-married', 'Married-civ-spouse', 'Divorced',
+            'Separated', 'Widowed', 'Married-spouse-absent'
+        ])
 
-    marital_status = st.selectbox('Marital Status', [
-        'Never-married', 'Married-civ-spouse', 'Divorced',
-        'Separated', 'Widowed', 'Married-spouse-absent'
-    ])
+        occupation = st.selectbox('Occupation', [
+            'Tech-support', 'Craft-repair', 'Other-service', 'Sales',
+            'Exec-managerial', 'Prof-specialty', 'Handlers-cleaners',
+            'Machine-op-inspct', 'Adm-clerical', 'Farming-fishing',
+            'Transport-moving', 'Priv-house-serv', 'Protective-serv',
+            'Armed-Forces'
+        ])
 
-    occupation = st.selectbox('Occupation', [
-        'Tech-support', 'Craft-repair', 'Other-service', 'Sales',
-        'Exec-managerial', 'Prof-specialty', 'Handlers-cleaners',
-        'Machine-op-inspct', 'Adm-clerical', 'Farming-fishing',
-        'Transport-moving', 'Priv-house-serv', 'Protective-serv',
-        'Armed-Forces'
-    ])
-
-    gender = st.selectbox('Gender', ['Male', 'Female'])
-    relationship = st.selectbox('Relationship', [
-        'Husband', 'Not-in-family', 'Own-child', 'Unmarried', 'Wife', 'Other-relative'
-    ])
-    race = st.selectbox('Race', [
-        'White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'
-    ])
-    native_country = st.selectbox('Native Country', [
-        'United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'
-    ])
+        gender = st.selectbox('Gender', ['Male', 'Female'])
+        relationship = st.selectbox('Relationship', [
+            'Husband', 'Not-in-family', 'Own-child', 'Unmarried', 'Wife', 'Other-relative'
+        ])
+        race = st.selectbox('Race', [
+            'White', 'Black', 'Asian-Pac-Islander', 'Amer-Indian-Eskimo', 'Other'
+        ])
+        native_country = st.selectbox('Native Country', [
+            'United-States', 'Mexico', 'Philippines', 'Germany', 'Canada', 'India', 'Other'
+        ])
 
     data = {
         'Age': age,
