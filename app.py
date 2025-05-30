@@ -15,9 +15,13 @@ st.markdown("This app predicts whether a person earns >50K or <=50K based on dem
 
 # Input form
 def user_input():
+    # Baris pertama: age dan hours per week
+    col1, col2 = st.columns(2)
+    with col1:
+        age = st.slider('Age', 17, 90, 30)
+    with col2:
+        hours_per_week = st.slider('Hours per Week', 1, 100, 40)
     left, right = st.columns((2,2))
-    age = st.slider('Age', 17, 90, 30)
-    hours_per_week = st.slider('Hours per Week', 1, 100, 40)
     with right: 
         capital_gain = st.number_input('Capital Gain', 0, 100000, 0)
         capital_loss = st.number_input('Capital Loss', 0, 5000, 0)
