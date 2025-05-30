@@ -93,6 +93,8 @@ def user_input():
 df, education, education_num = user_input()
 
 if st.button('Predict'):
+    st.write(df)
+    st.write("Raw prediction:", prediction)
     prediction = model.predict(df)[0]
     result = '>50K' if prediction == 1 else '<=50K'
 
