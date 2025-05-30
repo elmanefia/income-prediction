@@ -25,7 +25,6 @@ def user_input():
     with right: 
         capital_gain = st.number_input('Capital Gain', 0, 100000, 0)
         capital_loss = st.number_input('Capital Loss', 0, 5000, 0)
-        fnlwgt = st.number_input('Final Weight', 10000, 1000000, 50000)
 
         workclass = st.selectbox('Workclass', [
             'Private', 'Self-emp-not-inc', 'Local-gov', 'State-gov',
@@ -73,7 +72,6 @@ def user_input():
 
     data = {
         'Age': age,
-        'Final Weight': fnlwgt,
         'EducationNum': education_num,
         'Capital Gain': capital_gain,
         'capital loss': capital_loss,
